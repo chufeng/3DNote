@@ -12,6 +12,7 @@
 #define kScreen_Width [UIScreen mainScreen].bounds.size.width
 @interface noteDetailViewController ()<UIAlertViewDelegate>
 @property UITextView *mytextView;
+@property (nonatomic, strong)UIButton *savebtn;
 @end
 
 @implementation noteDetailViewController
@@ -29,15 +30,22 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    self.mytextView = [[UITextView alloc]initWithFrame:CGRectMake(10, 0, kScreen_Width, kScreen_Height)];
+    self.mytextView = [[UITextView alloc]initWithFrame:CGRectMake(10, 15, kScreen_Width, kScreen_Height)];
     NSArray *array = [[NSUserDefaults standardUserDefaults] objectForKey:@"note"];
     NSString *oldtext = [array objectAtIndex:self.index];
     self.mytextView.text = oldtext;
-    UIBarButtonItem *savebtn = [[UIBarButtonItem alloc]initWithTitle:@"save" style:UIBarButtonItemStylePlain target:self action:@selector(saveclicked)];
+//    UIBarButtonItem *savebtn = [[UIBarButtonItem alloc]initWithTitle:@"save" style:UIBarButtonItemStylePlain target:self action:@selector(saveclicked)];
+
     UIBarButtonItem *delbtn = [[UIBarButtonItem alloc]initWithTitle:@"delete" style:UIBarButtonItemStylePlain target:self action:@selector(deleteclicked)];
-    NSArray *bararray = [NSArray arrayWithObjects:delbtn,savebtn, nil];
+    NSArray *bararray = [NSArray arrayWithObjects:delbtn, nil];
     self.navigationItem.rightBarButtonItems = bararray;
     [self.view addSubview:self.mytextView];
+    _savebtn=[[UIButton alloc] init];
+    [_savebtn setImage:[UIImage imageNamed:@"save"] forState:UIControlStateNormal];
+    _savebtn.frame=CGRectMake(kScreen_Width/2-12,kScreen_Height-70,32,32);
+    [_savebtn addTarget:self action:@selector(saveclicked) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:_savebtn];
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -68,8 +76,9 @@
     [[NSUserDefaults standardUserDefaults] setObject:mutableDateArray forKey:@"date"];
     
     [self.mytextView resignFirstResponder];
-    UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:nil message:@"save success!" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil, nil];
-    [alertView show];
+//    UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:nil message:@"save success!" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil, nil];
+//    [alertView show];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 -(void)deleteclicked{

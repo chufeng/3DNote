@@ -19,7 +19,7 @@
 @property ZYTextView *mytextView;
 //键盘上 文字|语音按钮
 @property (nonatomic, strong) ZYToolBarView *toolBarView;
-
+@property (nonatomic, strong)UIButton *savebtn;
 //语音识别的view
 @property (nonatomic, strong) ZYVoiceRecognizerView *voiceRecognizerView;
 
@@ -45,8 +45,14 @@
     self.edgesForExtendedLayout = UIRectEdgeNone;
     [self setupTextView];
     [self setupToolBarView];
-    UIBarButtonItem *savebtn = [[UIBarButtonItem alloc]initWithTitle:@"save" style:UIBarButtonItemStyleBordered target:self action:@selector(saveclicked)];
-    self.navigationItem.rightBarButtonItem = savebtn;
+    _savebtn=[[UIButton alloc] init];
+    [_savebtn setImage:[UIImage imageNamed:@"save"] forState:UIControlStateNormal];
+    _savebtn.frame=CGRectMake(kScreen_Width/2-12,kScreen_Height-70,32,32);
+    [_savebtn addTarget:self action:@selector(saveclicked) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:_savebtn];
+
+//    UIBarButtonItem *savebtn = [[UIBarButtonItem alloc]initWithTitle:@"save" style:UIBarButtonItemStyleBordered target:self action:@selector(saveclicked)];
+//    self.navigationItem.rightBarButtonItem = savebtn;
 }
 #pragma mark - 懒加载
 - (ZYToolBarView *)toolBarView
@@ -107,12 +113,13 @@
 #pragma mark - textView
 - (void)setupTextView
 {
-    self.mytextView = [[ZYTextView alloc]initWithFrame:CGRectMake(10, 0, kScreen_Width, kScreen_Height)];
+    self.mytextView = [[ZYTextView alloc]initWithFrame:CGRectMake(10, 15, kScreen_Width-20, kScreen_Height-120)];
     [self.view addSubview:self.mytextView];
     
-    self.mytextView.placeHolder = @"输入文字...";
+    self.mytextView.placeHolder = @"输入文字...(您输入的第一排将会作为标题)";
     self.mytextView.font = [UIFont systemFontOfSize:16];
     self.mytextView.delegate = self;
+    
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textChange) name:UITextViewTextDidChangeNotification object:nil];
     
@@ -126,36 +133,47 @@
 }
 
 - (void)saveclicked{
-    NSMutableArray *initNoteArray = [[NSMutableArray alloc]init];
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"note"]==nil) {
-        [[NSUserDefaults standardUserDefaults] setObject:initNoteArray forKey:@"note"];
-    }
-    NSArray *tempNoteArray = [[NSUserDefaults standardUserDefaults] objectForKey:@"note"];
-    NSMutableArray *mutableNoteArray = [tempNoteArray mutableCopy];
     NSString *textstring = [self.mytextView text];
-    [mutableNoteArray insertObject:textstring atIndex:0 ];
-    rootViewController *rootctrl = [[rootViewController alloc]init];
-    rootctrl.noteArray = mutableNoteArray;
-    [[NSUserDefaults standardUserDefaults] setObject:mutableNoteArray forKey:@"note"];
-    
-    NSMutableArray *initDateArray = [[NSMutableArray alloc]init];
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"date"]==nil) {
-        [[NSUserDefaults standardUserDefaults] setObject:initDateArray forKey:@"date"];
+    NSString *temp = [textstring stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    if([temp length]!=0){
+        NSMutableArray *initNoteArray = [[NSMutableArray alloc]init];
+        if ([[NSUserDefaults standardUserDefaults] objectForKey:@"note"]==nil) {
+            [[NSUserDefaults standardUserDefaults] setObject:initNoteArray forKey:@"note"];
+        }
+        NSArray *tempNoteArray = [[NSUserDefaults standardUserDefaults] objectForKey:@"note"];
+        NSMutableArray *mutableNoteArray = [tempNoteArray mutableCopy];
+        
+        [mutableNoteArray insertObject:textstring atIndex:0 ];
+        rootViewController *rootctrl = [[rootViewController alloc]init];
+        rootctrl.noteArray = mutableNoteArray;
+        [[NSUserDefaults standardUserDefaults] setObject:mutableNoteArray forKey:@"note"];
+        
+        NSMutableArray *initDateArray = [[NSMutableArray alloc]init];
+        if ([[NSUserDefaults standardUserDefaults] objectForKey:@"date"]==nil) {
+            [[NSUserDefaults standardUserDefaults] setObject:initDateArray forKey:@"date"];
+        }
+        NSArray *tempDateArray = [[NSUserDefaults standardUserDefaults] objectForKey:@"date"];
+        NSMutableArray *mutableDateArray = [tempDateArray mutableCopy];
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init ];
+        [dateFormatter setDateFormat:@"MM-dd HH:mm"];
+        NSDate *now = [NSDate date];
+        NSString *datestring = [dateFormatter stringFromDate:now];
+        [mutableDateArray insertObject:datestring atIndex:0 ];
+        rootctrl.dateArray = mutableDateArray;
+        [[NSUserDefaults standardUserDefaults] setObject:mutableDateArray forKey:@"date"];
+
     }
-    NSArray *tempDateArray = [[NSUserDefaults standardUserDefaults] objectForKey:@"date"];
-    NSMutableArray *mutableDateArray = [tempDateArray mutableCopy];
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init ];
-    [dateFormatter setDateFormat:@"MM-dd HH:mm"];
-    NSDate *now = [NSDate date];
-    NSString *datestring = [dateFormatter stringFromDate:now];
-    [mutableDateArray insertObject:datestring atIndex:0 ];
-    rootctrl.dateArray = mutableDateArray;
-    [[NSUserDefaults standardUserDefaults] setObject:mutableDateArray forKey:@"date"];
     
     
     [self.mytextView resignFirstResponder];
-    UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:nil message:@"add success!" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil, nil];
-    [alertView show];
+//    UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:nil message:@"add success!" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil, nil];
+//    [alertView show];
+
+    [self.navigationController popViewControllerAnimated:YES];
+    [self.navigationController dismissViewControllerAnimated:true completion:^{
+        rootViewController *vc=[[rootViewController alloc]init];
+        [vc addsucc];
+    }];
 }
 - (void)keyboardFrameChange:(NSNotification *)note
 {
@@ -175,6 +193,7 @@
             
             self.toolBarView.transform = CGAffineTransformIdentity;
             self.toolBarView.hidden = YES;
+            self.savebtn.transform = CGAffineTransformIdentity;
             
         }];
     }
@@ -188,13 +207,14 @@
             CGFloat ty = - frame.size.height;
             if(self.navigationController)
             {
-                ty = - frame.size.height - 64;
+                ty = - frame.size.height;
             }
             else
             {
                 ty = - frame.size.height;
             }
             self.toolBarView.transform = CGAffineTransformMakeTranslation(0, ty);
+            self.savebtn.transform = CGAffineTransformMakeTranslation(0, ty+10);
             self.toolBarView.hidden = NO;
             
             //语音转文字frame

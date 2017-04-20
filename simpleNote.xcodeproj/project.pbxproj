@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		26B18FC71EA87CBA00853DE9 /* question.png in Resources */ = {isa = PBXBuildFile; fileRef = 26B18FC61EA87CBA00853DE9 /* question.png */; };
 		9524A3A4183DB33A00C85070 /* noteDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9524A3A3183DB33A00C85070 /* noteDetailViewController.m */; };
 		954898CB183C5FB400DA628C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 954898CA183C5FB400DA628C /* Foundation.framework */; };
 		954898CD183C5FB400DA628C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 954898CC183C5FB400DA628C /* CoreGraphics.framework */; };
@@ -61,6 +62,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		26B18FC61EA87CBA00853DE9 /* question.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = question.png; sourceTree = "<group>"; };
 		9524A3A2183DB33A00C85070 /* noteDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = noteDetailViewController.h; sourceTree = "<group>"; };
 		9524A3A3183DB33A00C85070 /* noteDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = noteDetailViewController.m; sourceTree = "<group>"; };
 		954898C7183C5FB400DA628C /* simpleNote.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = simpleNote.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -157,6 +159,7 @@
 				EB2025061E948A6600A317DA /* 岂止简洁.PNG */,
 				EB20250D1E94C39300A317DA /* 何止简洁.PNG */,
 				EB20250F1E94D44600A317DA /* add.png */,
+				26B18FC61EA87CBA00853DE9 /* question.png */,
 				EB2025101E94D44600A317DA /* Delete.png */,
 				EB2025111E94D44600A317DA /* return.png */,
 				EB2025121E94D44600A317DA /* save.png */,
@@ -331,7 +334,8 @@
 				ORGANIZATIONNAME = vic;
 				TargetAttributes = {
 					954898C6183C5FB400DA628C = {
-						DevelopmentTeam = MYY3RHJT9C;
+						DevelopmentTeam = PYN3J5Y54V;
+						ProvisioningStyle = Manual;
 					};
 					954898E1183C5FB400DA628C = {
 						TestTargetID = 954898C6183C5FB400DA628C;
@@ -370,6 +374,7 @@
 				EB2024EE1E8FA24F00A317DA /* VoiceOff.wav in Resources */,
 				EB2025141E94D44600A317DA /* Delete.png in Resources */,
 				EB2024EF1E8FA24F00A317DA /* VoiceOn.wav in Resources */,
+				26B18FC71EA87CBA00853DE9 /* question.png in Resources */,
 				EB2025161E94D44600A317DA /* save.png in Resources */,
 				EB2025031E8FA41500A317DA /* Launch Screen.storyboard in Resources */,
 				EB2025051E8FA6B900A317DA /* Assets.xcassets in Resources */,
@@ -521,7 +526,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				DEVELOPMENT_TEAM = MYY3RHJT9C;
+				DEVELOPMENT_TEAM = PYN3J5Y54V;
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Lib/XunFeiYuYin",
@@ -529,7 +535,11 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "simpleNote/simpleNote-Prefix.pch";
 				INFOPLIST_FILE = "simpleNote/simpleNote-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "9ff8a1df-118b-46ce-bdab-d7c737816ec5";
+				PROVISIONING_PROFILE_SPECIFIER = developer_yi;
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -539,7 +549,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				DEVELOPMENT_TEAM = MYY3RHJT9C;
+				DEVELOPMENT_TEAM = PYN3J5Y54V;
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Lib/XunFeiYuYin",
@@ -547,7 +558,11 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "simpleNote/simpleNote-Prefix.pch";
 				INFOPLIST_FILE = "simpleNote/simpleNote-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "9ff8a1df-118b-46ce-bdab-d7c737816ec5";
+				PROVISIONING_PROFILE_SPECIFIER = developer_yi;
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

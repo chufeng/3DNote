@@ -11,4 +11,5 @@
 @interface rootViewController : UIViewController
 @property (nonatomic)  NSMutableArray *noteArray;
 @property (nonatomic)  NSMutableArray *dateArray;
+-(void)addsucc;
 @end
