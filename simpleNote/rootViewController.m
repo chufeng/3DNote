@@ -37,7 +37,7 @@ typedef NS_ENUM(NSUInteger,eReloadType){
     eReloadSection, // by section
     eReloadAll // by tableView
 };
-
+ 
 - (void)reloadTableViewByType:(eReloadType) type
 {
     switch (type) {

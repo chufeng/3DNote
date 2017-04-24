@@ -200,7 +200,7 @@
 //    UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:nil message:@"你确定要删除该记事?" delegate:self cancelButtonTitle:@"否" otherButtonTitles:@"是", nil];
 //    [alertView show];
 }
-
+ 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     if (buttonIndex == 0) {
         NSArray *tempArray = [[NSUserDefaults standardUserDefaults] objectForKey:@"note"];

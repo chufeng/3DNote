@@ -131,7 +131,7 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
+ 
 - (void)saveclicked{
     NSString *textstring = [self.mytextView text];
     NSString *temp = [textstring stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
