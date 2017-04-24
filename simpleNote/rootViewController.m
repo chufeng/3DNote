@@ -15,7 +15,7 @@
 @interface rootViewController ()<UITableViewDataSource,UITableViewDelegate,UISearchDisplayDelegate>
 @property NSMutableArray *filteredNoteArray;
 @property UISearchBar *bar;
-@property (nonatomic, strong)UITableView *tableView;
+
 @property UISearchDisplayController *searchDispCtrl;
 @end
 
@@ -186,26 +186,36 @@ typedef NS_ENUM(NSUInteger,eReloadType){
     NSString *date = [dateArray objectAtIndex:indexPath.row];
     NSUInteger charnum = [note length];
     if (self.traitCollection.forceTouchCapability == UIForceTouchCapabilityAvailable) {
-        NSLog(@"3D Touch  可用!");
+        NSLog(@"3D Touch  启动!");
         //给cell注册3DTouch的peek（预览）和pop功能
         [self registerForPreviewingWithDelegate:self sourceView:cell];
     } else {
         NSLog(@"3D Touch 无效");
     }
-    if (charnum < 22) {
+    if (charnum < 80) {
         cell.contentLB.text = note;
     }
     else{
-        cell.contentLB.text = [[note substringToIndex:18] stringByAppendingString:@"..."];
+        cell.contentLB.text = [[note substringToIndex:80] stringByAppendingString:@"..."];
     }
 //     NSString *subStr2 = [str1 substringToIndex:7];
-    if ([date length]>13){
+    if ([note length]>16){
         NSString *subStr = [note substringToIndex:13];
-        NSArray *note1=[subStr componentsSeparatedByString:@"\n"];
-        cell.titleLB.text=note1[0];
+        NSMutableArray *note1=[subStr componentsSeparatedByString:@" "];
+        if (note1.count>1){
+            [note1 removeLastObject];
+        }
+        NSString *note2=[note1 componentsJoinedByString:@" "];
+        NSArray *note3=[note2 componentsSeparatedByString:@"\n"];
+        cell.titleLB.text=note3[0];
     }else{
-        NSArray *note1=[note componentsSeparatedByString:@"\n"];
-        cell.titleLB.text=note1[0];
+        NSMutableArray *note1=[note componentsSeparatedByString:@" "];
+        if (note1.count>1){
+            [note1 removeLastObject];
+        }
+        NSString *note2=[note1 componentsJoinedByString:@" "];
+        NSArray *note3=[note2 componentsSeparatedByString:@"\n"];
+        cell.titleLB.text=note3[0];
         
     }
     cell.datalb.text = date;

@@ -33,6 +33,27 @@
     }
     return self;
 }
+#pragma mark - 3Dtouch
+- (NSArray<id<UIPreviewActionItem>> *)previewActionItems {
+    // setup a list of preview actions
+    UIPreviewAction *action1 = [UIPreviewAction actionWithTitle:@"删除" style:UIPreviewActionStyleDefault handler:^(UIPreviewAction * _Nonnull action, UIViewController * _Nonnull previewViewController) {
+        [self deleteclicked];
+    }];
+    
+    UIPreviewAction *action2 = [UIPreviewAction actionWithTitle:@"Aciton2" style:UIPreviewActionStyleDefault handler:^(UIPreviewAction * _Nonnull action, UIViewController * _Nonnull previewViewController) {
+        NSLog(@"Aciton2");
+    }];
+    
+    UIPreviewAction *action3 = [UIPreviewAction actionWithTitle:@"Aciton3" style:UIPreviewActionStyleDefault handler:^(UIPreviewAction * _Nonnull action, UIViewController * _Nonnull previewViewController) {
+        NSLog(@"Aciton3");
+    }];
+    
+    NSArray *actions = @[action1,action2,action3];
+    
+    // and return them (return the array of actions instead to see all items ungrouped)
+    return actions;
+}
+
 #pragma mark - 懒加载
 - (ZYToolBarView *)toolBarView
 {
@@ -162,8 +183,22 @@
 }
 
 -(void)deleteclicked{
-    UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:nil message:@"Are you sure to delete this note?" delegate:self cancelButtonTitle:@"Yes" otherButtonTitles:@"No", nil];
-    [alertView show];
+
+        NSArray *tempArray = [[NSUserDefaults standardUserDefaults] objectForKey:@"note"];
+        NSMutableArray *mutableArray = [tempArray mutableCopy];
+        [mutableArray removeObjectAtIndex:self.index];
+        [[NSUserDefaults standardUserDefaults] setObject:mutableArray forKey:@"note"];
+        rootViewController *rootctrl = [[rootViewController alloc]init];
+        rootctrl.noteArray = mutableArray;
+        NSArray *tempDateArray = [[NSUserDefaults standardUserDefaults] objectForKey:@"date"];
+        NSMutableArray *mutableDateArray = [tempDateArray mutableCopy];
+        [mutableDateArray removeObjectAtIndex:self.index];
+        [[NSUserDefaults standardUserDefaults] setObject:mutableDateArray forKey:@"date"];
+        rootctrl.dateArray = mutableDateArray;
+        rootViewController *vc=[[rootViewController alloc]init];
+        [[vc tableView]reloadData];
+//    UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:nil message:@"你确定要删除该记事?" delegate:self cancelButtonTitle:@"否" otherButtonTitles:@"是", nil];
+//    [alertView show];
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
