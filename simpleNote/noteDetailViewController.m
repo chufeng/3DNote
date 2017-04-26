@@ -36,19 +36,19 @@
 #pragma mark - 3Dtouch
 - (NSArray<id<UIPreviewActionItem>> *)previewActionItems {
     // setup a list of preview actions
-    UIPreviewAction *action1 = [UIPreviewAction actionWithTitle:@"删除" style:UIPreviewActionStyleDefault handler:^(UIPreviewAction * _Nonnull action, UIViewController * _Nonnull previewViewController) {
+    UIPreviewAction *action1 = [UIPreviewAction actionWithTitle:@"删除" style:UIPreviewActionStyleDestructive handler:^(UIPreviewAction * _Nonnull action, UIViewController * _Nonnull previewViewController) {
         [self deleteclicked];
+        rootViewController *vc=[[rootViewController alloc]init];
+        [vc viewWillAppear:true];
     }];
     
-    UIPreviewAction *action2 = [UIPreviewAction actionWithTitle:@"Aciton2" style:UIPreviewActionStyleDefault handler:^(UIPreviewAction * _Nonnull action, UIViewController * _Nonnull previewViewController) {
+    UIPreviewAction *action2 = [UIPreviewAction actionWithTitle:@"修改" style:UIPreviewActionStyleDefault handler:^(UIPreviewAction * _Nonnull action, UIViewController * _Nonnull previewViewController) {
         NSLog(@"Aciton2");
     }];
     
-    UIPreviewAction *action3 = [UIPreviewAction actionWithTitle:@"Aciton3" style:UIPreviewActionStyleDefault handler:^(UIPreviewAction * _Nonnull action, UIViewController * _Nonnull previewViewController) {
-        NSLog(@"Aciton3");
-    }];
+
     
-    NSArray *actions = @[action1,action2,action3];
+    NSArray *actions = @[action1,action2];
     
     // and return them (return the array of actions instead to see all items ungrouped)
     return actions;
@@ -195,8 +195,7 @@
         [mutableDateArray removeObjectAtIndex:self.index];
         [[NSUserDefaults standardUserDefaults] setObject:mutableDateArray forKey:@"date"];
         rootctrl.dateArray = mutableDateArray;
-        rootViewController *vc=[[rootViewController alloc]init];
-        [[vc tableView]reloadData];
+
 //    UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:nil message:@"你确定要删除该记事?" delegate:self cancelButtonTitle:@"否" otherButtonTitles:@"是", nil];
 //    [alertView show];
 }
