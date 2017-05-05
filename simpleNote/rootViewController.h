@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "model.h"
 @interface rootViewController : UIViewController
 @property (nonatomic)  NSMutableArray *noteArray;
 @property (nonatomic)  NSMutableArray *dateArray;
 @property (nonatomic, strong)UITableView *tableView;
+@property(nonatomic, retain)model *model;
 -(void)addsucc;
 @end

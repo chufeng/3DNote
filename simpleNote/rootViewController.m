@@ -9,12 +9,17 @@
 #import "rootViewController.h"
 #import "addNoteViewController.h"
 #import "noteDetailViewController.h"
+#import "NSTimer+DelegateSelf.h"
+#import "model.h"
 #import "MyCell.h"
 #define kScreen_Height [UIScreen mainScreen].bounds.size.height
 #define kScreen_Width [UIScreen mainScreen].bounds.size.width
 @interface rootViewController ()<UITableViewDataSource,UITableViewDelegate,UISearchDisplayDelegate>
 @property NSMutableArray *filteredNoteArray;
 @property UISearchBar *bar;
+@property(nonatomic, retain)NSTimer *timer;
+
+
 
 @property UISearchDisplayController *searchDispCtrl;
 @end
@@ -22,8 +27,21 @@
 @implementation rootViewController
 @synthesize noteArray,dateArray,filteredNoteArray,bar,searchDispCtrl;
 
+- (void)dealloc
+{
+    //第三步
+    if (_model != nil) {
+        [_model removeObserver:self forKeyPath:@"modelArray"];
+    }
+    //停止定时器
+    if (_timer != nil) {
+        [_timer invalidate];
+        _timer = nil;
+    }
+}
 
 - (void)viewWillAppear:(BOOL)animated {
+
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden =NO;
      [self.navigationController setNavigationBarHidden:YES animated:NO];
@@ -31,6 +49,15 @@
     self.dateArray = [[NSUserDefaults standardUserDefaults] objectForKey:@"date"];
     [self reloadTableViewByType:2]; // to reload selected cell
 
+}
+-(void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    self.navigationController.navigationBarHidden =NO;
+    [self.navigationController setNavigationBarHidden:YES animated:NO];
+   
+    self.noteArray = [[NSUserDefaults standardUserDefaults] objectForKey:@"note"];
+    self.dateArray = [[NSUserDefaults standardUserDefaults] objectForKey:@"date"];
+    [self reloadTableViewByType:2]; // to reload selected cell
 }
 typedef NS_ENUM(NSUInteger,eReloadType){
     eReloadRow, // by row
@@ -73,6 +100,14 @@ typedef NS_ENUM(NSUInteger,eReloadType){
     
     [self.tableView reloadRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationTop];
 }
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if ([keyPath isEqualToString:@"modelArray"]) {
+        [_tableView reloadData];
+        NSLog(@"同步完成");
+    }
+}
+
 -(UITableView *)tableView{
     if(_tableView == nil){
         _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, kScreen_Width, kScreen_Height) style:UITableViewStyleGrouped];
@@ -94,8 +129,8 @@ typedef NS_ENUM(NSUInteger,eReloadType){
         
         [self.view addSubview:_tableView];
         UIButton *addbtn=[[UIButton alloc] init];
-        [addbtn setImage:[UIImage imageNamed:@"add"] forState:UIControlStateNormal];
-        addbtn.frame=CGRectMake(kScreen_Width/2-12,kScreen_Height-70,24,24);
+        [addbtn setImage:[UIImage imageNamed:@"nadd"] forState:UIControlStateNormal];
+        addbtn.frame=CGRectMake(kScreen_Width/2-15,kScreen_Height-70,30,30);
         [addbtn addTarget:self action:@selector(addnote) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:addbtn];
     }

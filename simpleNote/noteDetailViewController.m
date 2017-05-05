@@ -40,15 +40,14 @@
         [self deleteclicked];
         rootViewController *vc=[[rootViewController alloc]init];
         [vc viewWillAppear:true];
-    }];
-    
-    UIPreviewAction *action2 = [UIPreviewAction actionWithTitle:@"修改" style:UIPreviewActionStyleDefault handler:^(UIPreviewAction * _Nonnull action, UIViewController * _Nonnull previewViewController) {
-        NSLog(@"Aciton2");
-    }];
+         [[vc.model mutableArrayValueForKey:@"modelArray"] addObject:@"222SS"];
+                [self.navigationController popViewControllerAnimated:YES];
+}];
     
 
+
     
-    NSArray *actions = @[action1,action2];
+    NSArray *actions = @[action1];
     
     // and return them (return the array of actions instead to see all items ungrouped)
     return actions;
@@ -123,10 +122,15 @@
     self.navigationItem.rightBarButtonItems = bararray;
 
     _savebtn=[[UIButton alloc] init];
-    [_savebtn setImage:[UIImage imageNamed:@"save"] forState:UIControlStateNormal];
-    _savebtn.frame=CGRectMake(kScreen_Width/2-12,kScreen_Height-70,32,32);
+    [_savebtn setImage:[UIImage imageNamed:@"nback"] forState:UIControlStateNormal];
+    _savebtn.frame=CGRectMake(15,kScreen_Height-70,30,30);
     [_savebtn addTarget:self action:@selector(saveclicked) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_savebtn];
+    UIButton *deletebtn=[[UIButton alloc] init];
+    [deletebtn setImage:[UIImage imageNamed:@"ndelete"] forState:UIControlStateNormal];
+    deletebtn.frame=CGRectMake(kScreen_Width-45,kScreen_Height-70,30,30);
+    [deletebtn addTarget:self action:@selector(deleteclicked) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:deletebtn];
     
 }
 #pragma mark - setup

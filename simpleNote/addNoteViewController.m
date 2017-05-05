@@ -47,10 +47,10 @@
     [self setupToolBarView];
     _savebtn=[[UIButton alloc] init];
     [_savebtn setImage:[UIImage imageNamed:@"save"] forState:UIControlStateNormal];
-    _savebtn.frame=CGRectMake(kScreen_Width/2-12,kScreen_Height-70,32,32);
+    _savebtn.frame=CGRectMake(kScreen_Width/2-12,kScreen_Height-70,40,40);
     [_savebtn addTarget:self action:@selector(saveclicked) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_savebtn];
-
+     self.navigationController.view.backgroundColor=[UIColor whiteColor];
 //    UIBarButtonItem *savebtn = [[UIBarButtonItem alloc]initWithTitle:@"save" style:UIBarButtonItemStyleBordered target:self action:@selector(saveclicked)];
 //    self.navigationItem.rightBarButtonItem = savebtn;
 }
@@ -214,7 +214,7 @@
                 ty = - frame.size.height;
             }
             self.toolBarView.transform = CGAffineTransformMakeTranslation(0, ty);
-            self.savebtn.transform = CGAffineTransformMakeTranslation(0, ty+10);
+            self.savebtn.transform = CGAffineTransformMakeTranslation(0, ty-20);
             self.toolBarView.hidden = NO;
             
             //语音转文字frame

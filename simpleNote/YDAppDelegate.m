@@ -6,10 +6,10 @@
 //  Copyright (c) 2013年 vic. All rights reserved.
 //
 
-#import "XPAppDelegate.h"
+#import "YDAppDelegate.h"
 #import "rootViewController.h"
 
-@implementation XPAppDelegate
+@implementation YDAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
