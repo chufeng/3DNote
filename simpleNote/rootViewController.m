@@ -133,6 +133,16 @@ typedef NS_ENUM(NSUInteger,eReloadType){
         addbtn.frame=CGRectMake(kScreen_Width/2-15,kScreen_Height-70,30,30);
         [addbtn addTarget:self action:@selector(addnote) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:addbtn];
+        UIButton *morebtn=[[UIButton alloc] init];
+        [morebtn setImage:[UIImage imageNamed:@"nmore"] forState:UIControlStateNormal];
+        morebtn.frame=CGRectMake(25,kScreen_Height-70,30,30);
+//        [morebtn addTarget:self action:@selector(addnote) forControlEvents:UIControlEventTouchUpInside];
+        [self.view addSubview:morebtn];
+        UIButton *copybtn=[[UIButton alloc] init];
+        [copybtn setImage:[UIImage imageNamed:@"ncopy"] forState:UIControlStateNormal];
+        copybtn.frame=CGRectMake(kScreen_Width-55,kScreen_Height-70,30,30);
+        //        [copybtn addTarget:self action:@selector(addnote) forControlEvents:UIControlEventTouchUpInside];
+        [self.view addSubview:copybtn];
     }
     return _tableView;
 }

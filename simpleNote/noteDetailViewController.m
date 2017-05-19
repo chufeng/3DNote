@@ -19,6 +19,7 @@
 //键盘上 文字|语音按钮
 @property (nonatomic, strong) ZYToolBarView *toolBarView;
 @property (nonatomic, strong)UIButton *savebtn;
+@property (nonatomic, strong)UIButton *deletebtn;
 //语音识别的view
 @property (nonatomic, strong) ZYVoiceRecognizerView *voiceRecognizerView;
 @end
@@ -40,6 +41,7 @@
         [self deleteclicked];
         rootViewController *vc=[[rootViewController alloc]init];
         [vc viewWillAppear:true];
+        [self.navigationController popViewControllerAnimated:YES];
          [[vc.model mutableArrayValueForKey:@"modelArray"] addObject:@"222SS"];
                 [self.navigationController popViewControllerAnimated:YES];
 }];
@@ -126,11 +128,11 @@
     _savebtn.frame=CGRectMake(15,kScreen_Height-70,30,30);
     [_savebtn addTarget:self action:@selector(saveclicked) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_savebtn];
-    UIButton *deletebtn=[[UIButton alloc] init];
-    [deletebtn setImage:[UIImage imageNamed:@"ndelete"] forState:UIControlStateNormal];
-    deletebtn.frame=CGRectMake(kScreen_Width-45,kScreen_Height-70,30,30);
-    [deletebtn addTarget:self action:@selector(deleteclicked) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:deletebtn];
+    _deletebtn=[[UIButton alloc] init];
+    [_deletebtn setImage:[UIImage imageNamed:@"ndelete"] forState:UIControlStateNormal];
+    _deletebtn.frame=CGRectMake(kScreen_Width-45,kScreen_Height-70,30,30);
+    [_deletebtn addTarget:self action:@selector(deleteclicked) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:_deletebtn];
     
 }
 #pragma mark - setup
@@ -199,7 +201,7 @@
         [mutableDateArray removeObjectAtIndex:self.index];
         [[NSUserDefaults standardUserDefaults] setObject:mutableDateArray forKey:@"date"];
         rootctrl.dateArray = mutableDateArray;
-
+        [self.navigationController popViewControllerAnimated:YES];
 //    UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:nil message:@"你确定要删除该记事?" delegate:self cancelButtonTitle:@"否" otherButtonTitles:@"是", nil];
 //    [alertView show];
 }
@@ -242,6 +244,7 @@
             self.toolBarView.transform = CGAffineTransformIdentity;
             self.toolBarView.hidden = YES;
             self.savebtn.transform = CGAffineTransformIdentity;
+            self.deletebtn.transform = CGAffineTransformIdentity;
             
         }];
     }
@@ -263,6 +266,7 @@
             }
             self.toolBarView.transform = CGAffineTransformMakeTranslation(0, ty);
             self.savebtn.transform = CGAffineTransformMakeTranslation(0, ty-10);
+            self.deletebtn.transform = CGAffineTransformMakeTranslation(0, ty-10);
             self.toolBarView.hidden = NO;
             
             //语音转文字frame
